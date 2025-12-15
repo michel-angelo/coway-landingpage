@@ -819,10 +819,10 @@
           <section className="py-24 bg-offwhite relative">
             <div className="container mx-auto px-6 text-center mb-16">
               <span className="text-primary font-bold tracking-widest text-sm uppercase">
-                Pilihan 3.000+ Keluarga Cerdas
+                Pilihan Keluarga Indonesia
               </span>
               <h2 className="font-serif text-4xl lg:text-5xl mt-2 text-dark">
-                Solusi Sesuai Kebutuhan
+                Spesifikasi & Paket Harga
               </h2>
             </div>
 
@@ -830,77 +830,237 @@
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   {
-                    name: "OMBAK",
-                    tag: "Best Seller",
-                    desc: "Spesialis air panas 50 level suhu. Favorit untuk bikin kopi & susu bayi presisi.",
-                    img: "img/coway-ombak.webp",
-                    price: "Mulai 400rb-an",
+                    name: "NEO PLUS",
+                    model: "CHP-264L",
+                    category: "Paling Hemat",
+                    img: "img/coway-neoplus.webp",
+                    isBestSeller: true,
+                    specs: {
+                      tank: "5.8 Liter",
+                      power: "300W (Hot) / 0.7A",
+                      dim: "26 x 50 x 50 cm",
+                    },
+                    packages: [
+                      {
+                        tenure: "84 Bln",
+                        price: "270rb",
+                        note: "Paket 7 Tahun",
+                        highlight: true,
+                      }, // Changed to 84 Bln based on image
+                      {
+                        tenure: "72 Bln",
+                        price: "290rb",
+                        note: "Paket 6 Tahun",
+                      },
+                      {
+                        tenure: "60 Bln",
+                        price: "320rb",
+                        note: "Paket 5 Tahun",
+                      },
+                    ],
                   },
                   {
-                    name: "NEO PLUS",
-                    tag: "Paling Hemat",
-                    desc: "Desain minimalis, muat di dapur sempit. 3 Suhu (Panas, Dingin, Normal).",
-                    img: "img/coway-neoplus.webp",
-                    price: "Mulai 290rb-an",
+                    name: "OMBAK",
+                    model: "CHP-7310R",
+                    category: "Best for Family",
+                    img: "img/coway-ombak.webp",
+                    specs: {
+                      tank: "13.5 Liter",
+                      power: "672W (Hot) / 0.6A",
+                      dim: "34 x 52 x 52 cm",
+                    },
+                    packages: [
+                      {
+                        tenure: "84 Bln",
+                        price: "350rb",
+                        note: "Paket 7 Tahun",
+                        highlight: true,
+                      },
+                      {
+                        tenure: "72 Bln",
+                        price: "390rb",
+                        note: "Paket 6 Tahun",
+                      },
+                      {
+                        tenure: "60 Bln",
+                        price: "430rb",
+                        note: "Paket 5 Tahun",
+                      },
+                    ],
                   },
                   {
                     name: "CORE",
-                    tag: "Big Tank",
-                    desc: "Tangki besar, desain tinggi, praktis untuk semua kebutuhan.",
+                    model: "CHP-671R",
+                    category: "Big Capacity",
                     img: "img/coway-core.webp",
-                    price: "Mulai 300rb-an",
+                    specs: {
+                      tank: "21.1 Liter",
+                      power: "530W (Hot) / 1.0A",
+                      dim: "37 x 125 x 49 cm",
+                    },
+                    packages: [
+                      {
+                        tenure: "84 Bln",
+                        price: "370rb",
+                        note: "Paket 7 Tahun",
+                        highlight: true,
+                      },
+                      {
+                        tenure: "72 Bln",
+                        price: "410rb",
+                        note: "Paket 6 Tahun",
+                      },
+                      {
+                        tenure: "60 Bln",
+                        price: "450rb",
+                        note: "Paket 5 Tahun",
+                      },
+                    ],
                   },
                 ].map((prod, idx) => (
                   <div
                     key={idx}
-                    className="group relative bg-white rounded-[2rem] p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden cursor-pointer flex flex-col"
+                    className="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col hover:shadow-2xl transition-shadow duration-300 relative group"
                   >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-eco transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="font-bold text-2xl font-serif">
+                    {prod.isBestSeller && (
+                      <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 shadow-md">
+                        BEST SELLER
+                      </div>
+                    )}
+
+                    {/* Header & Image Section */}
+                    <div className="p-6 pb-0 flex-grow">
+                      <div className="flex justify-between items-start mb-4">
+                        <span className="text-primary font-bold text-lg tracking-tight">
+                          coway
+                        </span>
+                        <span className="text-gray-400 text-[10px] font-bold tracking-widest uppercase">
+                          {prod.category}
+                        </span>
+                      </div>
+
+                      {/* Product Name Badge (Brochure Style) */}
+                      <div className="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-lg w-fit mb-6 relative">
+                        <h3 className="font-bold text-2xl font-serif leading-none">
                           {prod.name}
                         </h3>
-                        <p className="text-xs text-primary font-bold mt-1">
-                          {prod.price}
+                        <p className="text-[10px] opacity-90 mt-1 font-mono">
+                          {prod.model}
                         </p>
+                        {/* Decorative triangle for speech bubble effect */}
+                        <div className="absolute top-full left-0 w-4 h-4 bg-primary clip-polygon"></div>
                       </div>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-1 rounded-full text-white uppercase tracking-wide transition-colors ${
-                          idx === 1 ? "bg-red-500" : "bg-dark"
-                        }`}
+
+                      {/* Product Image */}
+                      <div className="h-48 flex items-center justify-center relative mb-6">
+                        {/* Glow effect behind product */}
+                        <div className="absolute inset-0 bg-blue-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <img
+                          src={prod.img}
+                          alt={prod.name}
+                          loading="lazy"
+                          className="h-full object-contain relative z-10 drop-shadow-lg transform group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            e.target.src =
+                              "https://via.placeholder.com/300x400?text=" +
+                              prod.name;
+                          }}
+                        />
+                      </div>
+
+                      {/* Specs Grid */}
+                      <div className="grid grid-cols-1 gap-3 text-sm text-gray-600 mb-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
+                            <Icon
+                              name={
+                                prod.category.includes("Big")
+                                  ? "droplet"
+                                  : "droplet"
+                              }
+                              size={16}
+                            />
+                          </div>
+                          <div>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase">
+                              Kapasitas Tangki
+                            </p>
+                            <p className="font-semibold text-dark">
+                              {prod.specs.tank}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
+                            <Icon name="zap" size={16} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase">
+                              Daya Listrik
+                            </p>
+                            <p className="font-semibold text-dark">
+                              {prod.specs.power}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
+                            <Icon name="maximize" size={16} />
+                          </div>
+                          <div>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase">
+                              Dimensi (WxHxD)
+                            </p>
+                            <p className="font-semibold text-dark">
+                              {prod.specs.dim}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Pricing Packages (The "Gini Aja" Part) */}
+                    <div className="grid grid-cols-3 text-center text-white text-xs">
+                      {prod.packages.map((pkg, i) => (
+                        <div
+                          key={i}
+                          className={`py-3 px-1 flex flex-col justify-center gap-1 ${
+                            pkg.highlight
+                              ? "bg-[#0078a8] relative z-10 scale-y-110 shadow-lg origin-bottom font-bold" // Highlighted package pop up
+                              : i === 0
+                              ? "bg-[#00AEEF]"
+                              : i === 1
+                              ? "bg-[#40C4FF]"
+                              : "bg-[#81D4FA]"
+                          }`}
+                        >
+                          <span className="opacity-80 text-[10px] uppercase">
+                            {pkg.note}
+                          </span>
+                          <span className="text-sm md:text-base font-bold">
+                            Rp {pkg.price}
+                          </span>
+                          <span className="text-[9px]">/bulan</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Footer Note */}
+                    <div className="bg-gray-50 p-2 text-center text-[9px] text-gray-400 border-t border-gray-100">
+                      *Termasuk Heart Service Berkala & Ganti Filter
+                    </div>
+
+                    {/* CTA Overlay on Hover (Optional, or keep separate) */}
+                    <div className="p-4 bg-white border-t border-gray-100">
+                      <a
+                        href={`https://wa.me/6281234567890?text=Halo%20Pak%20Abdul,%20saya%20mau%20tanya%20paket%20${prod.name}`}
+                        target="_blank"
+                        className="w-full py-3 rounded-xl border border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
                       >
-                        {prod.tag}
-                      </span>
+                        Pilih Paket Ini
+                        <Icon name="chevron-right" size={16} />
+                      </a>
                     </div>
-
-                    <div className="h-56 flex items-center justify-center relative mb-6">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-blue-50 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <img
-                        src={prod.img}
-                        alt={prod.name}
-                        loading="lazy"
-                        className="h-full object-contain relative z-10 drop-shadow-lg group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          e.target.src =
-                            "https://via.placeholder.com/300x400?text=" +
-                            prod.name;
-                        }}
-                      />
-                    </div>
-
-                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
-                      {prod.desc}
-                    </p>
-
-                    <a
-                      href={`https://wa.me/6281234567890?text=Halo%20Pak%20Abdul,%20saya%20tertarik%20sama%20Coway%20${prod.name}`}
-                      target="_blank"
-                      className="w-full py-3 rounded-xl border-2 border-primary/10 text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
-                    >
-                      Konsultasi Model Ini
-                      <Icon name="message-circle" size={16} />
-                    </a>
                   </div>
                 ))}
               </div>
