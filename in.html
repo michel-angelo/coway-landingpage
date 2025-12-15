@@ -1,0 +1,396 @@
+return (
+          <section className="py-24 relative overflow-hidden">
+            {/* 1. Background Berwarna (Full Gradient) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-blue-100/50 z-0"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="text-center mb-16">
+                <span className="text-primary font-bold tracking-widest text-sm uppercase">
+                  Katalog Lengkap
+                </span>
+                <h2 className="font-serif text-4xl lg:text-5xl mt-2 text-dark">
+                  Pilih Solusi Sehatmu
+                </h2>
+
+                {/* CATEGORY TABS */}
+                <div className="flex justify-center gap-4 mt-8">
+                  <button
+                    onClick={() => setActiveCategory("Water Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Water Purifier"
+                        ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105 ring-2 ring-primary ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Icon name="droplet" size={18} />
+                    Water Purifier
+                  </button>
+                  <button
+                    onClick={() => setActiveCategory("Air Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Air Purifier"
+                        ? "bg-eco text-white shadow-lg shadow-eco/30 scale-105 ring-2 ring-eco ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Icon name="wind" size={18} />
+                    Air Purifier
+                  </button>
+                </div>
+              </div>
+
+              {/* BIG VISUAL HERO CARD (Pemanis Gede) */}
+              <div className="mb-16 relative w-full max-w-5xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-primary opacity-90 z-10"></div>
+                <img
+                  src="/img/pemanis2.webp"
+                  alt="Keluarga Bahagia Coway"
+                  className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 z-0 scale-105 group-hover:scale-100 transition-transform duration-1000"
+                  loading="lazy"
+                />
+
+                <div className="relative z-20 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
+                  <div className="text-center md:text-left max-w-lg">
+                    <div className="inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full mb-4 border border-white/30">
+                      <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                        <Icon
+                          name="star"
+                          size={14}
+                          className="text-yellow-400 fill-yellow-400"
+                        />
+                        Garansi Kepuasan Keluarga
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-3xl md:text-5xl leading-tight mb-4">
+                      "Air bersih itu hak, bukan kemewahan."
+                    </h3>
+                    <p className="text-blue-100 text-lg mb-6">
+                      Bergabunglah dengan 3.000+ keluarga yang sudah beralih ke
+                      gaya hidup lebih sehat bersama Coway.
+                    </p>
+                    <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">Bebas BPA</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">Halal MUI</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">WQA Gold Seal</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side: Visual Hook (Anak Kecil Minum) */}
+                  <div className="relative hidden md:block">
+                    <div className="absolute -inset-4 bg-white/20 blur-3xl rounded-full animate-pulse-fast"></div>
+                    <img
+                      src="/img/pemanis.webp"
+                      alt="Anak Kecil Minum"
+                      className="w-64 h-64 object-cover rounded-full border-4 border-white/50 shadow-2xl relative z-10"
+                      loading="lazy"
+                    />
+                    <div className="absolute -bottom-4 -right-4 bg-white text-primary p-4 rounded-2xl shadow-xl z-20 flex flex-col items-center">
+                      <span className="text-3xl font-bold">50+</span>
+                      <span className="text-[10px] uppercase font-bold text-gray-400">
+                        Negara
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+            </div>
+          </section>
+        );
+
+masa gw timpa pake script dibawah malah error
+
+return (
+          <section className="py-24 relative overflow-hidden">
+            {/* 1. Background Berwarna (Full Gradient) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-blue-100/50 z-0"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="text-center mb-16">
+                <span className="text-primary font-bold tracking-widest text-sm uppercase">
+                  Katalog Lengkap
+                </span>
+                <h2 className="font-serif text-4xl lg:text-5xl mt-2 text-dark">
+                  Pilih Solusi Sehatmu
+                </h2>
+
+                {/* CATEGORY TABS */}
+                <div className="flex justify-center gap-4 mt-8">
+                  <button
+                    onClick={() => setActiveCategory("Water Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Water Purifier"
+                        ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105 ring-2 ring-primary ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Icon name="droplet" size={18} />
+                    Water Purifier
+                  </button>
+                  <button
+                    onClick={() => setActiveCategory("Air Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Air Purifier"
+                        ? "bg-eco text-white shadow-lg shadow-eco/30 scale-105 ring-2 ring-eco ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+              {/* BIG VISUAL HERO CARD (Pemanis Gede - Responsive Fix) */}
+              <div className="mb-16 relative w-full max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl group bg-primary">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-primary opacity-90 z-10"></div>
+                {/* Background Image - Object Position diatur buat mobile */}
+                <img
+                  src="https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?auto=format&fit=crop&q=80&w=1200"
+                  alt="Keluarga Bahagia Coway"
+                  className="absolute inset-0 w-full h-full object-cover object-center mix-blend-overlay opacity-60 z-0 scale-105 group-hover:scale-100 transition-transform duration-1000"
+                  loading="lazy"
+                />
+
+                <div className="relative z-20 p-6 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
+                  <div className="text-center md:text-left w-full md:max-w-lg">
+                    {/* Badge Kecil di Mobile */}
+                    <div className="inline-block bg-white/20 backdrop-blur-md px-3 py-1 md:px-4 rounded-full mb-4 border border-white/30">
+                      <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider flex items-center justify-center md:justify-start gap-2">
+                        <Icon
+                          name="star"
+                          size={14}
+                          className="text-yellow-400 fill-yellow-400"
+                        />
+                        Garansi Kepuasan Keluarga
+                      </span>
+                    </div>
+                    
+                    <h3 className="font-serif text-2xl md:text-5xl leading-tight mb-4 drop-shadow-sm">
+                      "Air bersih itu hak, bukan kemewahan."
+                    </h3>
+                    
+                    <p className="text-blue-50 text-sm md:text-lg mb-6 leading-relaxed">
+                      Bergabunglah dengan 3.000+ keluarga yang sudah beralih ke
+                      gaya hidup lebih sehat bersama Coway.
+                    </p>
+                    
+                    {/* Trust Badges - Grid di Mobile biar rapi */}
+                    <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-4">
+                      <div className="flex items-center gap-2 bg-black/20 px-3 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco shrink-0"
+                          size={16}
+                        />
+                        <span className="text-xs md:text-sm font-bold">Bebas BPA</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-3 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco shrink-0"
+                          size={16}
+                        />
+                        <span className="text-xs md:text-sm font-bold">Halal MUI</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-3 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco shrink-0"
+                          size={16}
+                        />
+                        <span className="text-xs md:text-sm font-bold">WQA Gold</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Visual Hook Mobile & Desktop */}
+                  <div className="relative w-full md:w-auto flex justify-center mt-4 md:mt-0">
+                    <div className="absolute -inset-4 bg-white/20 blur-2xl md:blur-3xl rounded-full animate-pulse-fast"></div>
+                    <img
+                      src="https://images.unsplash.com/photo-1606206591513-5a711df77994?auto=format&fit=crop&q=80&w=400"
+                      alt="Anak Kecil Minum"
+                      className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full border-4 border-white/50 shadow-2xl relative z-10"
+                      loading="lazy"
+                    />
+                    <div className="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 bg-white text-primary p-3 md:p-4 rounded-xl md:rounded-2xl shadow-xl z-20 flex flex-col items-center">
+                      <span className="text-xl md:text-3xl font-bold">50+</span>
+                      <span className="text-[8px] md:text-[10px] uppercase font-bold text-gray-400">
+                        Negara
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* LIST PRODUCT CARD - Grid 1 Kolom di Mobile biar Gede */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {filteredProducts.map((prod, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-3xl md:rounded-[2rem] shadow-lg md:shadow-xl overflow-hidden border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-300 relative group animate-fade-in"
+                  >
+                    {prod.isBestSeller && (
+                      <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 shadow-md">
+                        BEST SELLER
+                      </div>
+                    )}
+
+                    {/* Header & Image */}
+                    <div className="p-5 md:p-6 pb-0 flex-grow">
+                      <div className="flex justify-between items-start mb-4">
+                        <span className="text-primary font-bold text-lg tracking-tight">
+                          coway
+                        </span>
+                        <span className="text-gray-400 text-[10px] font-bold tracking-widest uppercase bg-gray-100 px-2 py-1 rounded-md">
+                          {prod.category}
+                        </span>
+                      </div>
+
+                      <div
+                        className={`${
+                          activeCategory === "Water Purifier"
+                            ? "bg-primary"
+                            : "bg-eco"
+                        } text-white p-3 md:p-4 rounded-xl rounded-tr-none shadow-lg w-fit mb-6 relative transition-colors duration-300`}
+                      >
+                        <h3 className="font-bold text-xl md:text-2xl font-serif leading-none">
+                          {prod.name}
+                        </h3>
+                        <p className="text-[10px] opacity-90 mt-1 font-mono">
+                          {prod.model}
+                        </p>
+                        <div
+                          className={`absolute top-full left-0 w-4 h-4 ${
+                            activeCategory === "Water Purifier"
+                              ? "bg-primary"
+                              : "bg-eco"
+                          } clip-polygon`}
+                        ></div>
+                      </div>
+
+                      <div className="h-40 md:h-48 flex items-center justify-center relative mb-6">
+                        <div
+                          className={`absolute inset-0 rounded-full blur-2xl md:blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                            activeCategory === "Water Purifier"
+                              ? "bg-blue-100/50"
+                              : "bg-green-100/50"
+                          }`}
+                        ></div>
+                        <img
+                          src={prod.img}
+                          alt={prod.name}
+                          loading="lazy"
+                          className="h-full object-contain relative z-10 drop-shadow-lg transform group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            e.target.src =
+                              "https://via.placeholder.com/300x400?text=" +
+                              prod.name;
+                          }}
+                        />
+                      </div>
+
+                      {/* Specs - Grid 2 Kolom di Mobile biar compact */}
+                      <div className="grid grid-cols-2 md:grid-cols-1 gap-3 text-sm text-gray-600 mb-6">
+                        <div className="flex items-center gap-2 md:gap-3">
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 bg-gray-100 shrink-0">
+                            <Icon
+                              name={
+                                prod.category.includes("Water")
+                                  ? "droplet"
+                                  : "wind"
+                              }
+                              size={14}
+                            />
+                          </div>
+                          <div>
+                            <p className="text-[8px] md:text-[10px] text-gray-400 font-bold uppercase">
+                              {prod.category.includes("Water")
+                                ? "Kapasitas"
+                                : "Area"}
+                            </p>
+                            <p className="font-semibold text-dark text-xs md:text-base">
+                              {prod.specs.tank}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 md:gap-3">
+                          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 bg-gray-100 shrink-0">
+                            <Icon name="zap" size={14} />
+                          </div>
+                          <div>
+                            <p className="text-[8px] md:text-[10px] text-gray-400 font-bold uppercase">
+                              Daya
+                            </p>
+                            <p className="font-semibold text-dark text-xs md:text-base">
+                              {prod.specs.power}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Pricing Packages */}
+                    <div className="grid grid-cols-3 text-center text-white text-xs">
+                      {prod.packages.map((pkg, i) => (
+                        <div
+                          key={i}
+                          className={`py-2 md:py-3 px-1 flex flex-col justify-center gap-0.5 md:gap-1 ${
+                            pkg.highlight
+                              ? "bg-[#0078a8] relative z-10 scale-y-110 shadow-lg origin-bottom font-bold"
+                              : i === 0
+                              ? "bg-[#00AEEF]"
+                              : i === 1
+                              ? "bg-[#40C4FF]"
+                              : "bg-[#81D4FA]"
+                          }`}
+                        >
+                          <span className="opacity-80 text-[8px] md:text-[10px] uppercase">
+                            {pkg.note}
+                          </span>
+                          <span className="text-sm md:text-base font-bold">
+                            {pkg.price.startsWith("Rp") ? "" : "Rp "}
+                            {pkg.price}
+                          </span>
+                          {pkg.price !== "Simat" && (
+                            <span className="text-[8px] md:text-[9px]">/bulan</span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="p-4 bg-white border-t border-gray-100">
+                      <a
+                        href={`https://wa.me/6281234567890?text=Halo%20Pak%20Abdul,%20saya%20tertarik%20sama%20Coway%20${prod.name}`}
+                        target="_blank"
+                        className={`w-full py-3 rounded-xl border font-bold text-sm transition-all flex items-center justify-center gap-2 group-hover:text-white ${
+                          activeCategory === "Water Purifier"
+                            ? "border-primary text-primary hover:bg-primary"
+                            : "border-eco text-eco hover:bg-eco"
+                        }`}
+                      >
+                        Pilih Paket Ini
+                        <Icon name="chevron-right" size={16} />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
