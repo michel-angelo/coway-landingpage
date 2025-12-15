@@ -578,7 +578,21 @@
       const TrustBar = () => {
         return (
           <div className="bg-gray-100 py-3 border-b border-gray-200 overflow-hidden">
-            <div className="container mx-auto px-6 flex items-center justify-center gap-2 md:gap-4 text-gray-500 text-[10px] md:text-xs font-medium uppercase tracking-widest whitespace-nowrap overflow-x-auto hide-scrollbar">
+            {/* Mobile Version - Stack */}
+            <div className="container mx-auto px-6 md:hidden">
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="flex items-center gap-1 text-gray-600 text-xs font-bold">
+                  <Icon name="map-pin" size={14} className="text-primary" />
+                  Terpasang di 3.500+ Rumah
+                </span>
+                <span className="text-[10px] text-gray-400 font-medium tracking-wide">
+                  Jabodetabek • Surabaya • Medan • Bandung
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop Version - Original */}
+            <div className="container mx-auto px-6 hidden md:flex items-center justify-center gap-4 text-gray-500 text-xs font-medium uppercase tracking-widest">
               <span className="flex items-center gap-1">
                 <Icon name="map-pin" size={12} /> Terpasang di 3.500+ Rumah
               </span>
@@ -1072,7 +1086,7 @@
                     {/* WQA */}
                     <div className="bg-white p-2 rounded flex items-center justify-center w-16 h-16">
                       <img
-                        src="https://imgs.search.brave.com/gC8VVcbWU0C4rHvsl5Sb7-DTRCP4JbhUgExOSfgehtg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2hvcGlmeS5jb20v/cy9maWxlcy8xLzAx/NTkvODQyOS81OTkw/L2ZpbGVzL1dRQV80/ODB4NDgwLmpwZz92/PTE1NzA1MDI4MTE"    
+                        src="https://imgs.search.brave.com/gC8VVcbWU0C4rHvsl5Sb7-DTRCP4JbhUgExOSfgehtg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/c2hvcGlmeS5jb20v/cy9maWxlcy8xLzAx/NTkvODQyOS81OTkw/L2ZpbGVzL1dRQV80/ODB4NDgwLmpwZz92/PTE1NzA1MDI4MTE"
                         alt="WQA Gold Seal"
                         className="w-full"
                         loading="lazy"
