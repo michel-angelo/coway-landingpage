@@ -130,7 +130,23 @@
     </script>
     <style>
       body {
-        background-color: #f9fafb;
+        /* Background berwarna halus (Gradient Mesh Simulation) */
+        background-color: #f0f9ff; /* Light Blue Base */
+        background-image: radial-gradient(
+            at 0% 0%,
+            hsla(253, 16%, 7%, 0) 0,
+            hsla(253, 16%, 7%, 0) 50%
+          ),
+          radial-gradient(
+            at 50% 0%,
+            hsla(225, 39%, 30%, 0) 0,
+            hsla(225, 39%, 30%, 0) 50%
+          ),
+          radial-gradient(
+            at 100% 0%,
+            hsla(339, 49%, 30%, 0) 0,
+            hsla(339, 49%, 30%, 0) 50%
+          );
         color: #1a1a1a;
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
@@ -563,7 +579,7 @@
               </span>
             </div>
             <a
-              href="https://wa.me/6281234567890?text=Halo%20Health%20Planner,%20saya%20mau%20amankan%20promo%20Coway%20hari%20ini"
+              href="https://wa.me/6285167053929?text=Halo%20Health%20Planner,%20saya%20mau%20amankan%20promo%20Coway%20hari%20ini"
               target="_blank"
               className="bg-[#25D366] text-white px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg hover:bg-[#20bd5a] transition-all"
             >
@@ -612,7 +628,7 @@
       // Updated WA Floating Button (Desktop Only)
       const WAButtonDesktop = () => (
         <a
-          href="https://wa.me/6281234567890?text=Halo%20Pak%20Abdul,%20tanya%20paket%20Coway%20dong"
+          href="https://wa.me/6285167053929?text=Halo%20Pak%20Abdul,%20tanya%20paket%20Coway%20dong"
           target="_blank"
           className="fixed bottom-8 right-8 z-50 hidden md:flex items-center gap-3 group bg-white p-2 pr-6 rounded-full shadow-2xl border border-gray-100 hover:scale-105 transition-all cursor-pointer"
         >
@@ -815,112 +831,361 @@
       };
 
       const ProductShowcase = () => {
-        return (
-          <section className="py-24 bg-offwhite relative">
-            <div className="container mx-auto px-6 text-center mb-16">
-              <span className="text-primary font-bold tracking-widest text-sm uppercase">
-                Pilihan Keluarga Indonesia
-              </span>
-              <h2 className="font-serif text-4xl lg:text-5xl mt-2 text-dark">
-                Spesifikasi & Paket Harga
-              </h2>
-            </div>
+        const [activeCategory, setActiveCategory] = useState("Water Purifier");
 
-            <div className="container mx-auto px-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: "NEO PLUS",
-                    model: "CHP-264L",
-                    category: "Paling Hemat",
-                    img: "img/coway-neoplus.webp",
-                    isBestSeller: true,
-                    specs: {
-                      tank: "5.8 Liter",
-                      power: "300W (Hot) / 0.7A",
-                      dim: "26 x 50 x 50 cm",
-                    },
-                    packages: [
-                      {
-                        tenure: "84 Bln",
-                        price: "270rb",
-                        note: "Paket 7 Tahun",
-                        highlight: true,
-                      }, // Changed to 84 Bln based on image
-                      {
-                        tenure: "72 Bln",
-                        price: "290rb",
-                        note: "Paket 6 Tahun",
-                      },
-                      {
-                        tenure: "60 Bln",
-                        price: "320rb",
-                        note: "Paket 5 Tahun",
-                      },
-                    ],
-                  },
-                  {
-                    name: "OMBAK",
-                    model: "CHP-7310R",
-                    category: "Best for Family",
-                    img: "img/coway-ombak.webp",
-                    specs: {
-                      tank: "13.5 Liter",
-                      power: "672W (Hot) / 0.6A",
-                      dim: "34 x 52 x 52 cm",
-                    },
-                    packages: [
-                      {
-                        tenure: "84 Bln",
-                        price: "350rb",
-                        note: "Paket 7 Tahun",
-                        highlight: true,
-                      },
-                      {
-                        tenure: "72 Bln",
-                        price: "390rb",
-                        note: "Paket 6 Tahun",
-                      },
-                      {
-                        tenure: "60 Bln",
-                        price: "430rb",
-                        note: "Paket 5 Tahun",
-                      },
-                    ],
-                  },
-                  {
-                    name: "CORE",
-                    model: "CHP-671R",
-                    category: "Big Capacity",
-                    img: "img/coway-core.webp",
-                    specs: {
-                      tank: "21.1 Liter",
-                      power: "530W (Hot) / 1.0A",
-                      dim: "37 x 125 x 49 cm",
-                    },
-                    packages: [
-                      {
-                        tenure: "84 Bln",
-                        price: "370rb",
-                        note: "Paket 7 Tahun",
-                        highlight: true,
-                      },
-                      {
-                        tenure: "72 Bln",
-                        price: "410rb",
-                        note: "Paket 6 Tahun",
-                      },
-                      {
-                        tenure: "60 Bln",
-                        price: "450rb",
-                        note: "Paket 5 Tahun",
-                      },
-                    ],
-                  },
-                ].map((prod, idx) => (
+        // Data Produk Lengkap (Water & Air) - DATA REAL DARI BROSUR
+        const products = [
+          // --- WATER PURIFIERS ---
+          {
+            name: "CINNAMON",
+            model: "P-6320R",
+            category: "Water Purifier",
+            tag: "Termurah Hemat Listrik",
+            img: "img/coway-cinnamon.webp", // Pastikan file ada
+            specs: {
+              tank: "5.0 L (Ambient)",
+              power: "20 Watt",
+              dim: "20 x 40 x 40 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "180rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "200rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "220rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "NEO PLUS",
+            model: "CHP-264L",
+            category: "Water Purifier",
+            tag: "Best Seller Keluarga",
+            isBestSeller: true,
+            img: "img/coway-neoplus.webp", // Pastikan file ada
+            specs: {
+              tank: "5.8 L (Panas/Dingin)",
+              power: "300W (Hot) / 0.7A",
+              dim: "26 x 50 x 50 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "270rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "290rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "320rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "VILLAEM II",
+            model: "CHP-18AR",
+            category: "Water Purifier",
+            tag: "Fleksibel Knob Suhu",
+            img: "img/coway-villaem2.webp", // Pastikan file ada
+            specs: {
+              tank: "11.3 L (Panas/Dingin)",
+              power: "270W (Hot) / 0.7A",
+              dim: "34 x 51 x 52 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "310rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "350rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "370rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "OMBAK",
+            model: "CHP-7310R",
+            category: "Water Purifier",
+            tag: "Spesialis Air Panas",
+            img: "img/coway-ombak.webp", // Pastikan file ada
+            specs: {
+              tank: "13.5 L (50 Level Suhu)",
+              power: "672W (Hot) / 0.6A",
+              dim: "34 x 52 x 52 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "350rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "390rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "430rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "CORE",
+            model: "CHP-671R",
+            category: "Water Purifier",
+            tag: "Kapasitas Besar",
+            img: "img/coway-core.webp", // Pastikan file ada
+            specs: {
+              tank: "21.1 L (Floor Standing)",
+              power: "530W (Hot) / 1.0A",
+              dim: "37 x 125 x 49 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "370rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "410rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "450rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          // --- AIR PURIFIERS ---
+          {
+            name: "BREEZE",
+            model: "AP-1018F",
+            category: "Air Purifier",
+            tag: "Slim & Ringan",
+            img: "img/coway-breeze.webp", // Pastikan file ada
+            specs: {
+              tank: "Area 33.9 m²",
+              power: "38 Watt (Max)",
+              dim: "37 x 64 x 18 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "190rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "210rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "230rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "STORM",
+            model: "AP-1516D",
+            category: "Air Purifier",
+            tag: "Sirkulasi Kuat",
+            isBestSeller: true,
+            img: "img/coway-storm.webp", // Pastikan file ada
+            specs: {
+              tank: "Area 49.5 m²",
+              power: "65 Watt (Max)",
+              dim: "41 x 76 x 24 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "210rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "230rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "250rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "LOMBOK III",
+            model: "AP-1520C",
+            category: "Air Purifier",
+            tag: "RBD Plasma (Anti Virus)",
+            img: "img/coway-lombok.webp", // Pastikan file ada
+            specs: {
+              tank: "Area 50 m²",
+              power: "90 Watt",
+              dim: "47 x 69 x 29 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "270rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "290rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "320rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "NOBLE 2",
+            model: "AP-2023K",
+            category: "Air Purifier",
+            tag: "Premium Luxury",
+            img: "img/coway-noble2.webp", // Pastikan file ada
+            specs: {
+              tank: "Area 67 m²",
+              power: "55 Watt",
+              dim: "32 x 80 x 32 cm",
+            },
+            packages: [
+              {
+                tenure: "84 Bln",
+                price: "410rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              { tenure: "72 Bln", price: "440rb", note: "Paket 6 Tahun" },
+              { tenure: "60 Bln", price: "470rb", note: "Paket 5 Tahun" },
+            ],
+          },
+          {
+            name: "NEXT STORM",
+            model: "AP-2025A",
+            category: "Air Purifire",
+            tag: "Upgrade Storm Version",
+            img: "img/coway-nextstorm.webp",
+            specs: {
+              tank: "Area 66 m²",
+              power: "65 Watt",
+              dim: "41 x 75 x 23 cm",
+            }, packages: [
+              {
+                tenure: "84 Bln",
+                price: "270rb",
+                note: "Paket 7 Tahun",
+                highlight: true,
+              },
+              {tenure: "72 Bln", price: "290rb", note: "Paket 6 Tahun"},
+              {tenure: "60 Bln", price: "320rb", note: "Paket 5 Tahun"}
+            ]
+          }
+        ];
+
+        const filteredProducts = products.filter(
+          (p) => p.category === activeCategory
+        );
+
+        return (
+          <section className="py-24 relative overflow-hidden">
+            {/* 1. Background Berwarna (Full Gradient) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-blue-100/50 z-0"></div>
+
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="text-center mb-16">
+                <span className="text-primary font-bold tracking-widest text-sm uppercase">
+                  Katalog Lengkap
+                </span>
+                <h2 className="font-serif text-4xl lg:text-5xl mt-2 text-dark">
+                  Pilih Solusi Sehatmu
+                </h2>
+
+                {/* CATEGORY TABS */}
+                <div className="flex justify-center gap-4 mt-8">
+                  <button
+                    onClick={() => setActiveCategory("Water Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Water Purifier"
+                        ? "bg-primary text-white shadow-lg shadow-primary/30 scale-105 ring-2 ring-primary ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Icon name="droplet" size={18} />
+                    Water Purifier
+                  </button>
+                  <button
+                    onClick={() => setActiveCategory("Air Purifier")}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 ${
+                      activeCategory === "Air Purifier"
+                        ? "bg-eco text-white shadow-lg shadow-eco/30 scale-105 ring-2 ring-eco ring-offset-2"
+                        : "bg-white text-gray-500 border border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <Icon name="wind" size={18} />
+                    Air Purifier
+                  </button>
+                </div>
+              </div>
+
+              {/* BIG VISUAL HERO CARD (Pemanis Gede) */}
+              <div className="mb-16 relative w-full max-w-5xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-primary opacity-90 z-10"></div>
+                <img
+                  src="/img/pemanis2.webp"
+                  alt="Keluarga Bahagia Coway"
+                  className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 z-0 scale-105 group-hover:scale-100 transition-transform duration-1000"
+                  loading="lazy"
+                />
+
+                <div className="relative z-20 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 text-white">
+                  <div className="text-center md:text-left max-w-lg">
+                    <div className="inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full mb-4 border border-white/30">
+                      <span className="text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                        <Icon
+                          name="star"
+                          size={14}
+                          className="text-yellow-400 fill-yellow-400"
+                        />
+                        Garansi Kepuasan Keluarga
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-3xl md:text-5xl leading-tight mb-4">
+                      "Air bersih itu hak, bukan kemewahan."
+                    </h3>
+                    <p className="text-blue-100 text-lg mb-6">
+                      Bergabunglah dengan 3.000+ keluarga yang sudah beralih ke
+                      gaya hidup lebih sehat bersama Coway.
+                    </p>
+                    <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">Bebas BPA</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">Halal MUI</span>
+                      </div>
+                      <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        <Icon
+                          name="check-circle"
+                          className="text-eco"
+                          size={20}
+                        />
+                        <span className="text-sm font-bold">WQA Gold Seal</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side: Visual Hook (Anak Kecil Minum) */}
+                  <div className="relative hidden md:block">
+                    <div className="absolute -inset-4 bg-white/20 blur-3xl rounded-full animate-pulse-fast"></div>
+                    <img
+                      src="/img/pemanis.webp"
+                      alt="Anak Kecil Minum"
+                      className="w-64 h-64 object-cover rounded-full border-4 border-white/50 shadow-2xl relative z-10"
+                      loading="lazy"
+                    />
+                    <div className="absolute -bottom-4 -right-4 bg-white text-primary p-4 rounded-2xl shadow-xl z-20 flex flex-col items-center">
+                      <span className="text-3xl font-bold">50+</span>
+                      <span className="text-[10px] uppercase font-bold text-gray-400">
+                        Negara
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {filteredProducts.map((prod, idx) => (
                   <div
                     key={idx}
-                    className="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col hover:shadow-2xl transition-shadow duration-300 relative group"
+                    className="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-300 relative group animate-fade-in"
                   >
                     {prod.isBestSeller && (
                       <div className="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl z-20 shadow-md">
@@ -928,7 +1193,7 @@
                       </div>
                     )}
 
-                    {/* Header & Image Section */}
+                    {/* Header & Image */}
                     <div className="p-6 pb-0 flex-grow">
                       <div className="flex justify-between items-start mb-4">
                         <span className="text-primary font-bold text-lg tracking-tight">
@@ -939,22 +1204,36 @@
                         </span>
                       </div>
 
-                      {/* Product Name Badge (Brochure Style) */}
-                      <div className="bg-primary text-white p-4 rounded-xl rounded-tr-none shadow-lg w-fit mb-6 relative">
+                      <div
+                        className={`${
+                          activeCategory === "Water Purifier"
+                            ? "bg-primary"
+                            : "bg-eco"
+                        } text-white p-4 rounded-xl rounded-tr-none shadow-lg w-fit mb-6 relative transition-colors duration-300`}
+                      >
                         <h3 className="font-bold text-2xl font-serif leading-none">
                           {prod.name}
                         </h3>
                         <p className="text-[10px] opacity-90 mt-1 font-mono">
                           {prod.model}
                         </p>
-                        {/* Decorative triangle for speech bubble effect */}
-                        <div className="absolute top-full left-0 w-4 h-4 bg-primary clip-polygon"></div>
+                        <div
+                          className={`absolute top-full left-0 w-4 h-4 ${
+                            activeCategory === "Water Purifier"
+                              ? "bg-primary"
+                              : "bg-eco"
+                          } clip-polygon`}
+                        ></div>
                       </div>
 
-                      {/* Product Image */}
                       <div className="h-48 flex items-center justify-center relative mb-6">
-                        {/* Glow effect behind product */}
-                        <div className="absolute inset-0 bg-blue-100/50 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div
+                          className={`absolute inset-0 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                            activeCategory === "Water Purifier"
+                              ? "bg-blue-100/50"
+                              : "bg-green-100/50"
+                          }`}
+                        ></div>
                         <img
                           src={prod.img}
                           alt={prod.name}
@@ -968,22 +1247,24 @@
                         />
                       </div>
 
-                      {/* Specs Grid */}
+                      {/* Specs */}
                       <div className="grid grid-cols-1 gap-3 text-sm text-gray-600 mb-6">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 bg-gray-100 shrink-0">
                             <Icon
                               name={
-                                prod.category.includes("Big")
+                                prod.category.includes("Water")
                                   ? "droplet"
-                                  : "droplet"
+                                  : "wind"
                               }
                               size={16}
                             />
                           </div>
                           <div>
                             <p className="text-[10px] text-gray-400 font-bold uppercase">
-                              Kapasitas Tangki
+                              {prod.category.includes("Water")
+                                ? "Kapasitas"
+                                : "Cakupan Area"}
                             </p>
                             <p className="font-semibold text-dark">
                               {prod.specs.tank}
@@ -991,7 +1272,7 @@
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 bg-gray-100 shrink-0">
                             <Icon name="zap" size={16} />
                           </div>
                           <div>
@@ -1003,30 +1284,17 @@
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-primary shrink-0">
-                            <Icon name="maximize" size={16} />
-                          </div>
-                          <div>
-                            <p className="text-[10px] text-gray-400 font-bold uppercase">
-                              Dimensi (WxHxD)
-                            </p>
-                            <p className="font-semibold text-dark">
-                              {prod.specs.dim}
-                            </p>
-                          </div>
-                        </div>
                       </div>
                     </div>
 
-                    {/* Pricing Packages (The "Gini Aja" Part) */}
+                    {/* Pricing Packages */}
                     <div className="grid grid-cols-3 text-center text-white text-xs">
                       {prod.packages.map((pkg, i) => (
                         <div
                           key={i}
                           className={`py-3 px-1 flex flex-col justify-center gap-1 ${
                             pkg.highlight
-                              ? "bg-[#0078a8] relative z-10 scale-y-110 shadow-lg origin-bottom font-bold" // Highlighted package pop up
+                              ? "bg-[#0078a8] relative z-10 scale-y-110 shadow-lg origin-bottom font-bold"
                               : i === 0
                               ? "bg-[#00AEEF]"
                               : i === 1
@@ -1038,24 +1306,25 @@
                             {pkg.note}
                           </span>
                           <span className="text-sm md:text-base font-bold">
-                            Rp {pkg.price}
+                            {pkg.price.startsWith("Rp") ? "" : "Rp "}
+                            {pkg.price}
                           </span>
-                          <span className="text-[9px]">/bulan</span>
+                          {pkg.price !== "Simat" && (
+                            <span className="text-[9px]">/bulan</span>
+                          )}
                         </div>
                       ))}
                     </div>
 
-                    {/* Footer Note */}
-                    <div className="bg-gray-50 p-2 text-center text-[9px] text-gray-400 border-t border-gray-100">
-                      *Termasuk Heart Service Berkala & Ganti Filter
-                    </div>
-
-                    {/* CTA Overlay on Hover (Optional, or keep separate) */}
                     <div className="p-4 bg-white border-t border-gray-100">
                       <a
-                        href={`https://wa.me/6281234567890?text=Halo%20Pak%20Abdul,%20saya%20mau%20tanya%20paket%20${prod.name}`}
+                        href={`https://wa.me/6285167053929?text=Halo%20Pak%20Abdul,%20saya%20tertarik%20sama%20Coway%20${prod.name}`}
                         target="_blank"
-                        className="w-full py-3 rounded-xl border border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all flex items-center justify-center gap-2"
+                        className={`w-full py-3 rounded-xl border font-bold text-sm transition-all flex items-center justify-center gap-2 group-hover:text-white ${
+                          activeCategory === "Water Purifier"
+                            ? "border-primary text-primary hover:bg-primary"
+                            : "border-eco text-eco hover:bg-eco"
+                        }`}
                       >
                         Pilih Paket Ini
                         <Icon name="chevron-right" size={16} />
@@ -1200,7 +1469,7 @@
 
                 {/* AGGRESSIVE CTA */}
                 <a
-                  href="https://wa.me/6281234567890?text=Halo%20Kak,%20saya%20mau%20cegah%20bahaya%20air%20dirumah%20sekarang"
+                  href="https://wa.me/6285167053929?text=Halo%20Kak,%20saya%20mau%20cegah%20bahaya%20air%20dirumah%20sekarang"
                   target="_blank"
                   className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 rounded-xl transition-all hover:shadow-[0_0_30px_rgba(37,211,102,0.4)] flex justify-center items-center gap-2 text-lg group animate-pulse-fast"
                 >
