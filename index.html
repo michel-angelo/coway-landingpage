@@ -511,23 +511,39 @@
         </div>
       );
 
-      const TrustBar = () => (
-        <div className="bg-gray-100 py-3 border-b border-gray-200 overflow-hidden">
-          <div className="container mx-auto px-6 flex items-center justify-center gap-2 md:gap-4 text-gray-500 text-[10px] md:text-xs font-medium uppercase tracking-widest whitespace-nowrap overflow-x-auto hide-scrollbar">
-            <span className="flex items-center gap-1">
-              <Icon name="map-pin" size={12} /> Terpasang di 3.500+ Rumah
-            </span>
-            <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span>Jabodetabek</span>
-            <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span>Surabaya</span>
-            <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span>Medan</span>
-            <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-            <span>Bandung</span>
+      const TrustBar = () => {
+        return (
+          <div className="bg-gray-100 py-3 border-b border-gray-200 overflow-hidden">
+            {/* Mobile Version - Stack */}
+            <div className="container mx-auto px-6 md:hidden">
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="flex items-center gap-1 text-gray-600 text-xs font-bold">
+                  <Icon name="map-pin" size={14} className="text-primary" />
+                  Terpasang di 3.500+ Rumah
+                </span>
+                <span className="text-[10px] text-gray-400 font-medium tracking-wide">
+                  Jabodetabek • Surabaya • Medan • Bandung
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop Version - Original */}
+            <div className="container mx-auto px-6 hidden md:flex items-center justify-center gap-4 text-gray-500 text-xs font-medium uppercase tracking-widest">
+              <span className="flex items-center gap-1">
+                <Icon name="map-pin" size={12} /> Terpasang di 3.500+ Rumah
+              </span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Jabodetabek</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Surabaya</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Medan</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Bandung</span>
+            </div>
           </div>
-        </div>
-      );
+        );
+      };
 
       const WAButtonDesktop = () => (
         <a
