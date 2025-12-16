@@ -11,6 +11,13 @@
       content="Jangan tunggu ginjal bermasalah. Cek solusi air murni Coway sekarang. Promo cicilan 0% dan gratis layanan servis seumur hidup langganan."
     />
 
+    <!-- Preload Carousel Image (Performance) -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1564078516393-cf04bd966897?auto=format&fit=crop&q=80&w=2000"
+    />
+
     <!-- Schema Markup (JSON-LD) - COMPLETE EDITION -->
     <script type="application/ld+json">
       {
@@ -104,17 +111,27 @@
             },
             animation: {
               "fade-in": "fadeIn 0.5s ease-out forwards",
+              "slide-up": "slideUp 0.6s ease-out forwards",
               "zoom-in": "zoomIn 0.3s ease-out forwards",
               "pulse-fast": "pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              progress: "progress 5s linear forwards",
             },
             keyframes: {
               fadeIn: {
                 "0%": { opacity: "0" },
                 "100%": { opacity: "1" },
               },
+              slideUp: {
+                "0%": { opacity: "0", transform: "translateY(20px)" },
+                "100%": { opacity: "1", transform: "translateY(0)" },
+              },
               zoomIn: {
                 "0%": { opacity: "0", transform: "scale(0.95)" },
                 "100%": { opacity: "1", transform: "scale(1)" },
+              },
+              progress: {
+                "0%": { width: "0%" },
+                "100%": { width: "100%" },
               },
             },
           },
@@ -175,27 +192,31 @@
       // --- Custom Component: Lucide Icon Wrapper ---
       const Icon = ({ name, size = 24, className = "" }) => {
         const ref = useRef(null);
-
         useEffect(() => {
           if (window.lucide && window.lucide.createIcons && ref.current) {
-            ref.current.innerHTML = "";
-            const i = document.createElement("i");
-            i.setAttribute("data-lucide", name);
-            i.setAttribute("width", size);
-            i.setAttribute("height", size);
-            ref.current.appendChild(i);
-            window.lucide.createIcons({
-              root: ref.current,
-              nameAttr: "data-lucide",
-              attrs: { class: "lucide-icon " },
-            });
+            const existing = ref.current.querySelector("svg");
+            if (
+              !existing ||
+              existing.getAttribute("data-lucide-name") !== name
+            ) {
+              ref.current.innerHTML = "";
+              const i = document.createElement("i");
+              i.setAttribute("data-lucide", name);
+              i.setAttribute("width", size);
+              i.setAttribute("height", size);
+              ref.current.appendChild(i);
+              window.lucide.createIcons({
+                root: ref.current,
+                nameAttr: "data-lucide",
+                attrs: { class: "lucide-icon", "data-lucide-name": name },
+              });
+            }
           }
         }, [name, size]);
-
         return (
           <span
             ref={ref}
-            className={`inline-flex items-center justify-center ${className}`}
+            className={`inline-flex items-center justify-center shrink-0 ${className}`}
             style={{
               width: size,
               height: size,
@@ -210,7 +231,6 @@
       const useOnScreen = (options) => {
         const ref = useRef(null);
         const [visible, setVisible] = useState(false);
-
         useEffect(() => {
           const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
@@ -224,6 +244,313 @@
           };
         }, [ref, options]);
         return [ref, visible];
+      };
+
+      // --- NEW COMPONENT: Hero Carousel ---
+      const HeroCarousel = () => {
+        const [current, setCurrent] = useState(0);
+        const [isPaused, setIsPaused] = useState(false);
+
+        // DATA CAROUSEL UPDATE: Added imgMobile property
+        // TODO: Replace with your actual mobile-optimized (portrait 9:16) image paths!
+        const slides = [
+          {
+            id: 1,
+            title: "Coway OMBAK",
+            subtitle: "The Specialist of Hot Water",
+            desc: "Satu-satunya pemurni air dengan 50 kombinasi suhu. Kopi, teh, susu bayi, semua tinggal tekan.",
+            img: "img/coway-ombak-hero.webp",
+            // Changed mobile placeholder to 800x1200 (Portrait 2:3)
+            imgMobile:
+              "img/coway-ombak-hero-mobile.webp",
+            color: "from-[#00AEEF]",
+            cta: "Lihat Ombak",
+          },
+          {
+            id: 2,
+            title: "Coway NEO PLUS",
+            subtitle: "Best Seller Keluarga Indonesia",
+            desc: "Pilihan #1 untuk keluarga muda. Hemat listrik, desain slim, dan harga paling masuk akal.",
+            img: "img/coway-neo-hero.webp",
+            // Changed mobile placeholder to 800x1200 (Portrait 2:3)
+            imgMobile:
+              "img/coway-neo-hero-mobile.webp",
+            color: "from-[#2563EB]",
+            cta: "Cek Promo Neo",
+          },
+          {
+            id: 3,
+            title: "Coway STORM",
+            subtitle: "Sirkulasi Udara Lebih Bersih",
+            desc: "Bukan cuma menyaring, tapi mensirkulasikan udara bersih ke seluruh sudut ruangan.",
+            img: "img/coway-hero-storm.webp",
+            // Changed mobile placeholder to 800x1200 (Portrait 2:3)
+            imgMobile:
+              "img/coway-hero-storm-mobile.webp",
+            color: "from-[#059669]",
+            cta: "Lihat Storm",
+          },
+        ];
+
+        useEffect(() => {
+          if (!isPaused) {
+            const interval = setInterval(() => {
+              setCurrent((c) => (c + 1) % slides.length);
+            }, 5000);
+            return () => clearInterval(interval);
+          }
+        }, [isPaused, slides.length]);
+
+        const nextSlide = () => setCurrent((c) => (c + 1) % slides.length);
+        const prevSlide = () =>
+          setCurrent((c) => (c - 1 + slides.length) % slides.length);
+
+        return (
+          <div
+            className="relative h-[600px] md:h-[700px] w-full overflow-hidden bg-gray-900 group"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+            onTouchCancel={() => setIsPaused(false)}
+          >
+            {slides.map((slide, idx) => (
+              <div
+                key={slide.id}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
+              >
+                {/* THE FIX: Using <picture> for Art Direction */}
+                <picture>
+                  {/* Mobile Image (Portrait) triggers on screens <= 768px */}
+                  <source media="(max-width: 768px)" srcSet={slide.imgMobile} />
+                  {/* Desktop Image (Landscape) fallback */}
+                  <img
+                    src={slide.img}
+                    alt={slide.title}
+                    className="w-full h-full object-cover opacity-60"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      // Fallback to unsplash if local image fails
+                      e.target.src =
+                        "https://images.unsplash.com/photo-1564078516393-cf04bd966897?auto=format&fit=crop&q=80&w=2000";
+                    }}
+                  />
+                </picture>
+
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${slide.color} to-black/80 opacity-90 md:opacity-80`}
+                ></div>
+                <div className="absolute inset-0 flex items-center">
+                  <div className="container mx-auto px-6 md:px-12">
+                    {/* MADING TWEAK: Added -mt-32 for mobile to raise text UP so image is visible */}
+                    <div
+                      className={`max-w-2xl space-y-4 md:space-y-6 -mt-32 md:mt-0 ${
+                        idx === current ? "animate-slide-up" : ""
+                      }`}
+                    >
+                      <div className="inline-block px-3 py-1 border border-white/30 rounded-full bg-white/10 backdrop-blur-sm">
+                        <span className="text-[10px] md:text-xs font-bold tracking-widest text-white uppercase">
+                          {slide.subtitle}
+                        </span>
+                      </div>
+                      <h2 className="text-4xl md:text-7xl font-serif font-bold text-white leading-tight drop-shadow-lg">
+                        {slide.title}
+                      </h2>
+                      <p className="text-sm md:text-lg text-gray-200 leading-relaxed drop-shadow-md max-w-lg">
+                        {slide.desc}
+                      </p>
+                      <div className="flex gap-3 md:gap-4 pt-2 md:pt-4">
+                        <a
+                          href="#katalog"
+                          className="bg-white text-dark px-5 py-2 text-sm md:px-8 md:py-3 md:text-base rounded-full font-bold hover:bg-gray-100 transition-colors flex items-center gap-2"
+                        >
+                          {slide.cta}{" "}
+                          <Icon
+                            name="arrow-right"
+                            size={16}
+                            className="md:w-5 md:h-5"
+                          />
+                        </a>
+                        <a
+                          href="https://wa.me/6285167053929"
+                          target="_blank"
+                          className="px-5 py-2 text-sm md:px-8 md:py-3 md:text-base rounded-full font-bold text-white border border-white hover:bg-white/10 transition-colors"
+                        >
+                          Chat CS
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Controls - Hidden on Mobile */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white/50 hover:text-white p-2 md:p-4 rounded-full hover:bg-black/20 transition-all hidden md:block"
+            >
+              <Icon name="chevron-left" size={40} />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white/50 hover:text-white p-2 md:p-4 rounded-full hover:bg-black/20 transition-all hidden md:block"
+            >
+              <Icon name="chevron-right" size={40} />
+            </button>
+
+            {/* Progress Indicators */}
+            <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-3">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrent(idx)}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    idx === current
+                      ? "w-8 md:w-12 bg-white"
+                      : "w-2 bg-white/40 hover:bg-white/60"
+                  }`}
+                ></button>
+              ))}
+            </div>
+
+            {/* Mobile Progress Bar */}
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 md:hidden">
+              <div
+                key={current}
+                className="h-full bg-primary/80 animate-progress"
+              ></div>
+            </div>
+
+            {/* SCROLL HINT */}
+            <div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce cursor-pointer opacity-80 hover:opacity-100"
+              onClick={() =>
+                document
+                  .getElementById("awareness")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              <span className="text-[10px] text-white uppercase tracking-widest font-bold drop-shadow-md hidden md:block">
+                Scroll
+              </span>
+              <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center p-1 backdrop-blur-sm">
+                <div className="w-1 h-2 bg-white rounded-full animate-pulse-fast"></div>
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      // --- HERO ORIGINAL (Renamed to AwarenessSection) ---
+      const AwarenessSection = () => {
+        const [ref, visible] = useOnScreen({ threshold: 0.1 });
+        const [showVideo, setShowVideo] = useState(false);
+
+        return (
+          // Added id="awareness" for scroll target
+          <section
+            id="awareness"
+            className="relative flex flex-col justify-center overflow-hidden bg-offwhite py-12 lg:py-24"
+          >
+            {showVideo && (
+              <div
+                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-none animate-fade-in"
+                onClick={() => setShowVideo(false)}
+              >
+                <div
+                  className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    onClick={() => setShowVideo(false)}
+                    className="absolute top-4 right-4 text-white hover:text-red-500 z-10 bg-black/50 rounded-full p-2 transition-colors"
+                  >
+                    <Icon name="x" size={24} />
+                  </button>
+                  <div className="aspect-video w-full">
+                    <iframe
+                      src="https://www.youtube.com/embed/KPKQZDIX3_I?autoplay=1&mute=1"
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                </div>
+              </div>
+            )}
+            {/* Background image logic from Hero Original but adapted for section */}
+            <div className="absolute inset-0 z-0">
+              <img
+                src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&q=80&w=2000"
+                alt="Modern Living Room Kitchen"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-white/90"></div>
+            </div>
+
+            <div className="container mx-auto px-6 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div
+                  className={`lg:col-span-7 space-y-8 ${
+                    visible ? "animate-fade-in" : "opacity-0"
+                  }`}
+                  ref={ref}
+                >
+                  <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full border border-red-200 shadow-sm animate-pulse-fast">
+                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-red-600">
+                      Peringatan Kesehatan Keluarga
+                    </span>
+                  </div>
+                  <h1 className="font-serif text-5xl lg:text-7xl leading-tight text-dark tracking-tight">
+                    90% Orang Baru Sadar <br />{" "}
+                    <span className="text-primary italic pr-2">
+                      Saat Ginjal Rusak.
+                    </span>
+                  </h1>
+                  <p className="text-gray-700 leading-relaxed text-lg max-w-xl font-medium">
+                    Air jernih belum tentu sehat. Mikroplastik & Logam Berat
+                    tidak hilang direbus. Apakah Anda rela mempertaruhkan masa
+                    depan anak hanya demi hemat Rp 5.000/hari?
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                    <a
+                      href="#calculator"
+                      className="bg-primary text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 text-lg"
+                    >
+                      Cek Risiko Air Saya <Icon name="arrow-right" size={20} />
+                    </a>
+                    <div
+                      onClick={() => setShowVideo(true)}
+                      className="px-6 py-4 rounded-full border border-gray-400/50 bg-white/50 hover:bg-white hover:border-primary transition-colors cursor-pointer group flex items-center justify-center gap-2"
+                    >
+                      <Icon
+                        name="play-circle"
+                        size={18}
+                        className="text-gray-600 group-hover:text-primary"
+                      />
+                      <span className="font-semibold text-gray-700 group-hover:text-primary">
+                        Lihat Bukti (Video)
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 italic">
+                    *Video menampilkan teknologi filtrasi Coway yang digunakan
+                    BTS.
+                  </p>
+                </div>
+                <div className="lg:col-span-5 relative mt-8 lg:mt-0 h-full">
+                  <WaterQuiz />
+                </div>
+              </div>
+            </div>
+          </section>
+        );
       };
 
       // --- Interactive Components ---
@@ -488,186 +815,7 @@
         );
       };
 
-      // --- Main Sections ---
-
-      const StickyCTA = () => (
-        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 flex items-center justify-between shadow-[0_-5px_20px_rgba(0,0,0,0.1)] md:hidden">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">
-              Promo Online
-            </span>
-            <span className="text-sm font-bold text-red-500 animate-pulse-fast">
-              Berakhir Hari Ini!
-            </span>
-          </div>
-          <a
-            href="https://wa.me/6285167053929?text=Halo%20Health%20Planner,%20saya%20mau%20amankan%20promo%20Coway%20hari%20ini"
-            target="_blank"
-            className="bg-[#25D366] text-white px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg hover:bg-[#20bd5a] transition-all"
-          >
-            <Icon name="message-circle" size={18} />
-            Chat Sekarang
-          </a>
-        </div>
-      );
-
-      const TrustBar = () => {
-        return (
-          <div className="bg-gray-100 py-3 border-b border-gray-200 overflow-hidden">
-            {/* Mobile Version - Stack */}
-            <div className="container mx-auto px-6 md:hidden">
-              <div className="flex flex-col items-center gap-1 text-center">
-                <span className="flex items-center gap-1 text-gray-600 text-xs font-bold">
-                  <Icon name="map-pin" size={14} className="text-primary" />
-                  Terpasang di 3.500+ Rumah
-                </span>
-                <span className="text-[10px] text-gray-400 font-medium tracking-wide">
-                  Jabodetabek • Surabaya • Medan • Bandung
-                </span>
-              </div>
-            </div>
-
-            {/* Desktop Version - Original */}
-            <div className="container mx-auto px-6 hidden md:flex items-center justify-center gap-4 text-gray-500 text-xs font-medium uppercase tracking-widest">
-              <span className="flex items-center gap-1">
-                <Icon name="map-pin" size={12} /> Terpasang di 3.500+ Rumah
-              </span>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-              <span>Jabodetabek</span>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-              <span>Surabaya</span>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-              <span>Medan</span>
-              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-              <span>Bandung</span>
-            </div>
-          </div>
-        );
-      };
-
-      const WAButtonDesktop = () => (
-        <a
-          href="https://wa.me/6285167053929?text=Halo%20Health%20Planner,%20tanya%20paket%20Coway%20dong"
-          target="_blank"
-          className="fixed bottom-8 right-8 z-50 hidden md:flex items-center gap-3 group bg-white p-2 pr-6 rounded-full shadow-xl border border-gray-100 hover:scale-105 transition-transform cursor-pointer"
-        >
-          <div className="bg-[#25D366] text-white p-3 rounded-full shadow-sm group-hover:rotate-12 transition-transform">
-            <Icon name="message-circle" className="text-white" size={24} />
-          </div>
-          <div className="flex flex-col items-start">
-            <span className="text-xs text-gray-400 font-medium">
-              Butuh Bantuan?
-            </span>
-            <span className="text-sm font-bold text-dark group-hover:text-[#25D366] transition-colors">
-              Chat Health Planner
-            </span>
-          </div>
-        </a>
-      );
-
-      const Hero = () => {
-        const [ref, visible] = useOnScreen({ threshold: 0.1 });
-        const [showVideo, setShowVideo] = useState(false);
-
-        return (
-          <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-offwhite pt-24 pb-12 lg:py-0">
-            {showVideo && (
-              <div
-                className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-none animate-fade-in"
-                onClick={() => setShowVideo(false)}
-              >
-                <div
-                  className="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button
-                    onClick={() => setShowVideo(false)}
-                    className="absolute top-4 right-4 text-white hover:text-red-500 z-10 bg-black/50 rounded-full p-2 transition-colors"
-                  >
-                    <Icon name="x" size={24} />
-                  </button>
-                  <div className="aspect-video w-full">
-                    <iframe
-                      src="https://www.youtube.com/embed/KPKQZDIX3_I?autoplay=1&mute=1"
-                      className="w-full h-full"
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div className="absolute inset-0 z-0">
-              <img
-                src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&q=80&w=2000"
-                alt="Modern Living Room Kitchen"
-                className="w-full h-full object-cover"
-                loading="eager"
-              />
-              <div className="absolute inset-0 bg-white/90"></div>
-            </div>
-            <div className="container mx-auto px-6 relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div
-                  className={`lg:col-span-7 space-y-8 ${
-                    visible ? "animate-fade-in" : "opacity-0"
-                  }`}
-                  ref={ref}
-                >
-                  <div className="inline-flex items-center gap-2 bg-red-50 px-4 py-2 rounded-full border border-red-200 shadow-sm animate-pulse-fast">
-                    <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                    <span className="text-xs font-bold uppercase tracking-wider text-red-600">
-                      Peringatan Kesehatan Keluarga
-                    </span>
-                  </div>
-                  <h1 className="font-serif text-5xl lg:text-7xl leading-tight text-dark tracking-tight">
-                    90% Orang Baru Sadar <br />{" "}
-                    <span className="text-primary italic pr-2">
-                      Saat Ginjal Rusak.
-                    </span>
-                  </h1>
-                  <p className="text-gray-700 leading-relaxed text-lg max-w-xl font-medium">
-                    Air jernih belum tentu sehat. Mikroplastik & Logam Berat
-                    tidak hilang direbus. Apakah Anda rela mempertaruhkan masa
-                    depan anak hanya demi hemat Rp 5.000/hari?
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                    <a
-                      href="#calculator"
-                      className="bg-primary text-white px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 text-lg"
-                    >
-                      Cek Risiko Air Saya <Icon name="arrow-right" size={20} />
-                    </a>
-                    <div
-                      onClick={() => setShowVideo(true)}
-                      className="px-6 py-4 rounded-full border border-gray-400/50 bg-white/50 hover:bg-white hover:border-primary transition-colors cursor-pointer group flex items-center justify-center gap-2"
-                    >
-                      <Icon
-                        name="play-circle"
-                        size={18}
-                        className="text-gray-600 group-hover:text-primary"
-                      />
-                      <span className="font-semibold text-gray-700 group-hover:text-primary">
-                        Lihat Bukti (Video)
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 italic">
-                    *Video menampilkan teknologi filtrasi Coway yang digunakan
-                    BTS.
-                  </p>
-                </div>
-                <div className="lg:col-span-5 relative mt-8 lg:mt-0 h-full">
-                  <WaterQuiz />
-                </div>
-              </div>
-            </div>
-          </section>
-        );
-      };
-
-      // --- RESTORED COMPARISON COMPONENT ---
+      // --- Comparison Component ---
       const Comparison = () => {
         const [ref, visible] = useOnScreen({ threshold: 0.2 });
         return (
@@ -727,12 +875,12 @@
         );
       };
 
+      // --- Product Showcase ---
       const ProductShowcase = () => {
         const [activeCategory, setActiveCategory] = useState("Water Purifier");
 
         // Data Produk Lengkap (Water & Air) - DATA REAL DARI BROSUR
         const products = [
-          // --- WATER PURIFIERS ---
           {
             name: "CINNAMON",
             model: "P-6320R",
@@ -963,7 +1111,7 @@
         );
 
         return (
-          <section className="py-24 relative overflow-hidden">
+          <section id="katalog" className="py-24 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-blue-50/80 via-white to-blue-100/50 z-0"></div>
             <div className="container mx-auto px-6 relative z-10">
               <div className="text-center mb-16">
@@ -999,7 +1147,6 @@
                 </div>
               </div>
 
-              {/* HERO CARD PEMANIS */}
               <div className="mb-16 relative w-full max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl group bg-primary">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-primary opacity-90 z-10"></div>
                 <img
@@ -1063,7 +1210,7 @@
                   <div className="relative w-full md:w-auto flex justify-center mt-4 md:mt-0">
                     <div className="absolute -inset-4 bg-white/20 blur-2xl md:blur-3xl rounded-full animate-pulse-fast"></div>
                     <img
-                      src="/img/pemanis.webp"
+                      src="/img/coway-neo-hero.webp"
                       alt="Anak Kecil Minum"
                       className="w-48 h-48 md:w-64 md:h-64 object-cover rounded-full border-4 border-white/50 shadow-2xl relative z-10"
                       loading="lazy"
@@ -1228,6 +1375,7 @@
         );
       };
 
+      // --- Local Proof ---
       const LocalProof = () => {
         const reviews = [
           {
@@ -1287,6 +1435,7 @@
         );
       };
 
+      // --- Final Appeal ---
       const FinalAppeal = () => {
         return (
           <section className="py-24 bg-dark relative overflow-hidden text-white text-center">
@@ -1305,7 +1454,7 @@
                 {/* HEALTH PLANNER PROFILE */}
                 <div className="flex flex-col items-center mb-8 -mt-16">
                   <img
-                    src="https://placehold.co/120x120/00AEEF/FFFFFF?text=FOTO"
+                    src="img/health-planner.webp"
                     alt="Foto Health Planner Coway"
                     loading="lazy"
                     className="w-24 h-24 rounded-full object-cover mx-auto ring-4 ring-white ring-offset-4 ring-offset-dark shadow-2xl"
@@ -1369,6 +1518,7 @@
         );
       };
 
+      // --- Footer ---
       const Footer = () => {
         return (
           <footer className="bg-[#111] text-gray-400 py-12 border-t border-gray-800 pb-24 md:pb-12">
@@ -1458,11 +1608,94 @@
         );
       };
 
+      // --- TrustBar Component (RESTORED) ---
+      const TrustBar = () => {
+        return (
+          <div className="bg-gray-100 py-3 border-b border-gray-200 overflow-hidden">
+            {/* Mobile Version - Stack */}
+            <div className="container mx-auto px-6 md:hidden">
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="flex items-center gap-1 text-gray-600 text-xs font-bold">
+                  <Icon name="map-pin" size={14} className="text-primary" />
+                  Terpasang di 3.500+ Rumah
+                </span>
+                <span className="text-[10px] text-gray-400 font-medium tracking-wide">
+                  Jabodetabek • Surabaya • Medan • Bandung
+                </span>
+              </div>
+            </div>
+
+            {/* Desktop Version - Original */}
+            <div className="container mx-auto px-6 hidden md:flex items-center justify-center gap-4 text-gray-500 text-xs font-medium uppercase tracking-widest">
+              <span className="flex items-center gap-1">
+                <Icon name="map-pin" size={12} /> Terpasang di 3.500+ Rumah
+              </span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Jabodetabek</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Surabaya</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Medan</span>
+              <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
+              <span>Bandung</span>
+            </div>
+          </div>
+        );
+      };
+
+      // --- StickyCTA Component (RESTORED) ---
+      const StickyCTA = () => {
+        return (
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 flex items-center justify-between shadow-[0_-5px_20px_rgba(0,0,0,0.1)] md:hidden">
+            <div className="flex flex-col">
+              <span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider">
+                Promo Online
+              </span>
+              <span className="text-sm font-bold text-red-500 animate-pulse-fast">
+                Berakhir Hari Ini!
+              </span>
+            </div>
+            <a
+              href="https://wa.me/6285167053929?text=Halo%20Health%20Planner,%20saya%20mau%20amankan%20promo%20Coway%20hari%20ini"
+              target="_blank"
+              className="bg-[#25D366] text-white px-6 py-3 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg hover:bg-[#20bd5a] transition-all"
+            >
+              <Icon name="message-circle" size={18} />
+              Chat Sekarang
+            </a>
+          </div>
+        );
+      };
+
+      // --- WAButtonDesktop Component (RESTORED) ---
+      const WAButtonDesktop = () => (
+        <a
+          href="https://wa.me/6285167053929?text=Halo%20Health%20Planner,%20tanya%20paket%20Coway%20dong"
+          target="_blank"
+          className="fixed bottom-8 right-8 z-50 hidden md:flex items-center gap-3 group bg-white p-2 pr-6 rounded-full shadow-xl border border-gray-100 hover:scale-105 transition-transform cursor-pointer"
+        >
+          <div className="bg-[#25D366] text-white p-3 rounded-full shadow-sm group-hover:rotate-12 transition-transform">
+            <Icon name="message-circle" className="text-white" size={24} />
+          </div>
+          <div className="flex flex-col items-start">
+            <span className="text-xs text-gray-400 font-medium">
+              Butuh Bantuan?
+            </span>
+            <span className="text-sm font-bold text-dark group-hover:text-[#25D366] transition-colors">
+              Chat Health Planner
+            </span>
+          </div>
+        </a>
+      );
+
       const App = () => {
         return (
           <div className="font-sans text-dark selection:bg-primary selection:text-white">
             <TrustBar />
-            <Hero />
+            {/* New Carousel Here */}
+            <HeroCarousel />
+            {/* Original Hero, renamed to AwarenessSection */}
+            <AwarenessSection />
             <Comparison />
             <ProductShowcase />
             <LocalProof />
